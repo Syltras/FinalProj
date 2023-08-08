@@ -6,13 +6,12 @@ import LoginPage from "./pages/Login/LoginPage";
 function App() {
   return (
     <div>
-      {/* <AuthProvider>
+      <AuthProvider>
     <div className="App">
     <LoginPage/>
     </div>
-    </AuthProvider> */}
-
-    <HomePage/>
+    </AuthProvider>
+    {/* <HomePage/> */}
     </div>
   );
 }

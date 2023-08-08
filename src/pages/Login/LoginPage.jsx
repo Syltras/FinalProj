@@ -1,4 +1,3 @@
-// LoginPage.js
 import React, { useState } from 'react';
 import { useAuth } from './AuthContext';
 import LoggedInImage from './LoggedInImage';
@@ -9,15 +8,30 @@ const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Perform authentication logic here (e.g., call an API, check credentials)
-    // For simplicity, we'll just check if the username and password are "admin"
-    if (username === 'admin' && password === 'admin') {
-      login();
-    } else {
-      alert('Invalid credentials. Please try again.');
+    try {
+      const response = await fetch('http://localhost:8000/api/login/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          login();
+        } else {
+          alert('Invalid credentials. Please try again.');
+        }
+      } else {
+        console.error('Error while logging in');
+      }
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
 
